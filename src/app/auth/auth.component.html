@@ -1,0 +1,48 @@
+<div class="row">
+  hello
+  <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <div class="col">
+      <mat-form-field appearance="standard">
+        <mat-label>Email</mat-label>
+        <input matInput 
+          ngModel 
+          name="email" 
+          required 
+          type="email" 
+          email/>
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field appearance="standard">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          ngModel
+          name="password"
+          required
+          type="password"
+          minlength="6"
+        />
+      </mat-form-field>
+    </div>
+    <div>
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="!form.valid"
+        type="submit"
+      >
+        {{ isLogin ? "Login" : "Sign Up" }}
+      </button>
+      <button
+        class="ml-2"
+        type="button"
+        mat-raised-button
+        color="accent"
+        (click)="onSwitchMode()"
+      >
+        Switch to {{ isLogin ? "Sign Up" : "Login" }}
+      </button>
+    </div>
+  </form>
+</div>
