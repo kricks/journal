@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { HttpJournalService } from './../journal/http-journal.service';
 import { NgForm } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -9,8 +10,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthComponent implements OnInit {
   isLogin = true;
+  error;
 
-  constructor(private service: HttpJournalService) {}
+  constructor(private service: HttpJournalService, private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -24,13 +26,25 @@ export class AuthComponent implements OnInit {
     const password = form.value.password;
 
     if (this.isLogin) {
-      //do something
+      this.service.login(email, password).subscribe(
+        (data) => {
+          console.log('log in');
+          console.log(data);
+          this.router.navigate(['/list']);
+        },
+        (error) => {
+          console.log('log in');
+          console.log(error);
+        }
+      );
     } else {
       this.service.signup(email, password).subscribe(
         (data) => {
+          console.log('sing up');
           console.log(data);
         },
         (error) => {
+          console.log('sing up');
           console.log(error);
         }
       );
