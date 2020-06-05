@@ -20,6 +20,8 @@ export class AuthComponent implements OnInit {
     this.isLogin = !this.isLogin;
   }
 
+  //neeed to commit
+
   onSubmit(form: NgForm) {
     console.log(form.value);
     const email = form.value.email;
