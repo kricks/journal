@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { HttpJournalService } from './http-journal.service';
+import { HttpJournalService } from '../http-journal.service';
 import { Journal } from './journal.model';
 
 @Component({

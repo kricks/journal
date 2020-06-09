@@ -1,23 +1,18 @@
-import { AuthResponseData } from './auth-response-data';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { AuthResponseData } from '../journal/auth-response-data';
 import { catchError, tap } from 'rxjs/operators';
-import { User } from '../auth/user.model';
+import { User } from './user.model';
+import { throwError, BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class HttpJournalService {
-  user = new Subject<User>();
+export class AuthService {
+  value;
+  user = new BehaviorSubject<User>(this.value);
 
-  constructor(private http: HttpClient) {}
-
-  getAll(): Observable<any> {
-    return this.http.get(
-      'https://sample-app-88fdd.firebaseio.com/entries.json'
-    );
-  }
+  constructor(private http: HttpClient) { }
 
   signup(email: string, password: string) {
     console.log('hit');
@@ -31,6 +26,7 @@ export class HttpJournalService {
         }
       )
       .pipe(
+        catchError(this.handleError),
         tap((data) => {
           this.handleAuth(
             data.email,
@@ -50,7 +46,7 @@ export class HttpJournalService {
         password,
         returnSecureToken: true,
       }
-    );
+    ).pipe(catchError(this.handleError));
   }
 
   handleAuth(email, userId, token, expiresIn) {
@@ -58,4 +54,24 @@ export class HttpJournalService {
     const user = new User(email, userId, token, expirationDate);
     this.user.next(user);
   }
+
+  private handleError(errorRes: HttpErrorResponse) {
+    let error = 'An unkown error!';
+    if (!errorRes.error || !errorRes.error.error) {
+      return throwError(error);
+    }
+    switch (errorRes.error.error.message) {
+      case 'EMAIL_EXISTS':
+        error = 'This email already exists';
+        break;
+      case 'EMAIL_NOT_FOUND':
+        error = 'This email does not exists';
+        break;
+      case 'INVALID_PASSWORD':
+        error = 'Invalid password';
+        break;
+    }
+    return throwError(error);
+  }
+
 }

@@ -1,4 +1,4 @@
-import { HttpJournalService } from '../journal/http-journal.service';
+import { HttpJournalService } from '../http-journal.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

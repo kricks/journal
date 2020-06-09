@@ -1,5 +1,8 @@
+import { AuthService } from './auth.service';
+import { AuthResponseData } from './../journal/auth-response-data';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { HttpJournalService } from './../journal/http-journal.service';
+import { HttpJournalService } from '../http-journal.service';
 import { NgForm } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,46 +12,44 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent implements OnInit {
-  isLogin = true;
+  isLoginMode = true;
+  isLoading = false;
   error;
 
-  constructor(private service: HttpJournalService, private router: Router) {}
+  constructor(private router: Router, private auth: AuthService) {}
 
   ngOnInit(): void {}
 
   onSwitchMode() {
-    this.isLogin = !this.isLogin;
+    this.isLoginMode = !this.isLoginMode;
   }
 
   onSubmit(form: NgForm) {
     console.log(form.value);
     const email = form.value.email;
     const password = form.value.password;
+    let authObs: Observable<AuthResponseData>;
 
-    if (this.isLogin) {
-      this.service.login(email, password).subscribe(
-        (data) => {
-          console.log('log in');
-          console.log(data);
-          this.router.navigate(['/list']);
-        },
-        (error) => {
-          console.log('log in');
-          console.log(error);
-        }
-      );
+    this.isLoading = true;
+
+    if (this.isLoginMode) {
+     authObs = this.auth.login(email, password);
     } else {
-      this.service.signup(email, password).subscribe(
-        (data) => {
-          console.log('sing up');
-          console.log(data);
-        },
-        (error) => {
-          console.log('sing up');
-          console.log(error);
-        }
-      );
+      authObs = this.auth.signup(email, password);
     }
+
+    authObs.subscribe(
+      (data) => {
+        console.log(data);
+        this.isLoading = false;
+        this.router.navigate(['/list']);
+      },
+      (error) => {
+        console.log(error);
+        this.error = error;
+        this.isLoading = false;
+      }
+    );
 
     form.reset();
   }
