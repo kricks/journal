@@ -1,3 +1,4 @@
+import { AuthGuardService } from './auth/auth-guard.service';
 import { JournalComponent } from './journal/journal.component';
 import { FormComponent } from './form/form.component';
 import { AuthComponent } from './auth/auth.component';
@@ -6,10 +7,10 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 const routes: Routes = [
-{ path: '', redirectTo: 'login', pathMatch: 'full' },
+{ path: '', redirectTo: '/login', pathMatch: 'full' },
 { path: 'login', component: AuthComponent },
-{ path: 'list', component: JournalComponent},
-{ path: 'journal-entry', component: FormComponent}
+{ path: 'list', component: JournalComponent, canActivate: [AuthGuardService]},
+{ path: 'journal-entry', component: FormComponent, canActivate: [AuthGuardService]}
 ];
 
 @NgModule({
