@@ -8,7 +8,8 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
 { path: '', redirectTo: 'login', pathMatch: 'full' },
 { path: 'login', component: AuthComponent },
-{ path: 'list', component: JournalComponent}
+{ path: 'list', component: JournalComponent},
+{ path: 'journal-entry', component: FormComponent}
 ];
 
 @NgModule({
