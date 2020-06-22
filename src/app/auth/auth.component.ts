@@ -42,7 +42,7 @@ export class AuthComponent implements OnInit {
       (data) => {
         console.log(data);
         this.isLoading = false;
-        this.router.navigate(['/list']);
+        this.router.navigate(['/journal-entries']);
       },
       (error) => {
         console.log(error);

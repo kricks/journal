@@ -9,8 +9,8 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
 { path: '', redirectTo: '/login', pathMatch: 'full' },
 { path: 'login', component: AuthComponent },
-{ path: 'list', component: JournalComponent, canActivate: [AuthGuardService]},
-{ path: 'journal-entry', component: FormComponent, canActivate: [AuthGuardService]}
+{ path: 'journal-entries', component: JournalComponent, canActivate: [AuthGuardService]},
+{ path: 'add-entry', component: FormComponent, canActivate: [AuthGuardService]}
 ];
 
 @NgModule({
