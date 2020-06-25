@@ -1,8 +1,7 @@
 import { AuthService } from './auth.service';
-import { AuthResponseData } from './../journal/auth-response-data';
+import { AuthResponseData } from './auth-response-data';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { HttpJournalService } from '../http-journal.service';
 import { NgForm } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 

@@ -8,7 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthComponent } from './auth/auth.component';
-import { FormComponent } from './form/form.component';
+import { FormComponent } from './journal/journal-form/form.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -39,11 +39,17 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { JournalComponent } from './journal/journal.component';
+import { JournalComponent } from './journal/journal-entries/journal.component';
 import { HeaderComponent } from './header/header.component';
 
 @NgModule({
-  declarations: [AppComponent, AuthComponent, FormComponent, JournalComponent, HeaderComponent],
+  declarations: [
+    AppComponent,
+    AuthComponent,
+    FormComponent,
+    JournalComponent,
+    HeaderComponent,
+  ],
   imports: [
     HttpClientModule,
     BrowserModule,
@@ -82,6 +88,7 @@ import { HeaderComponent } from './header/header.component';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
+    ReactiveFormsModule,
   ],
   providers: [
     {

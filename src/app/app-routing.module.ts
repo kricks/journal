@@ -1,9 +1,9 @@
 import { AuthGuardService } from './auth/auth-guard.service';
-import { JournalComponent } from './journal/journal.component';
-import { FormComponent } from './form/form.component';
 import { AuthComponent } from './auth/auth.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { JournalComponent } from './journal/journal-entries/journal.component';
+import { FormComponent } from './journal/journal-form/form.component';
 
 
 const routes: Routes = [
