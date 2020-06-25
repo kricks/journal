@@ -1,3 +1,4 @@
+import { AuthHttpService } from './auth-http.service';
 import { AuthService } from './auth.service';
 import { AuthResponseData } from './auth-response-data';
 import { Observable } from 'rxjs';
@@ -15,7 +16,7 @@ export class AuthComponent implements OnInit {
   isLoading = false;
   error;
 
-  constructor(private router: Router, private auth: AuthService) {}
+  constructor(private router: Router, private auth: AuthHttpService) {}
 
   ngOnInit(): void {}
 

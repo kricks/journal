@@ -14,22 +14,26 @@ export class HttpJournalService {
   getAll(): Observable<any> {
     return this.http.get(
       'https://sample-app-88fdd.firebaseio.com/entries.json'
-    );
+    ).pipe(map(res => {
+      return Object.keys(res).map((key) => {
+        return res[key];
+      });
+    }));
+  }
+
+  test() {
+    this.getAll().subscribe(data => {
+      console.log(data);
+    });
   }
 
   // get all by user ID
   // 'https://sample-app-88fdd.firebaseio.com/{uId}/entries.json'
 
   // create
-  create(date, entry): Observable<any> {
-    console.log(JSON.parse(date));
-    console.log(entry + " " + date);
+  create(data): Observable<any> {
     return this.http.post(
-      'https://sample-app-88fdd.firebaseio.com/entries.json',
-      {
-        date,
-        entry
-      }
+      'https://sample-app-88fdd.firebaseio.com/entries.json', data
     );
   }
 

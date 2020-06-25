@@ -32,9 +32,8 @@ export class FormComponent implements OnInit {
   }
 
   saveForm(form) {
-    this.journal.date = form.value.date;
-    this.journal.entry = form.value.entry;
+    this.form = form;
     console.log(this.form.value);
-    this.service.create(this.journal.date, this.journal.entry);
+    this.service.create(this.form.value).subscribe();
   }
 }

@@ -4,7 +4,9 @@ import { Injectable } from '@angular/core';
 import { AuthResponseData } from './auth-response-data';
 import { catchError, tap } from 'rxjs/operators';
 import { User } from './user.model';
-import { throwError, BehaviorSubject } from 'rxjs';
+import { throwError, BehaviorSubject, Subject } from 'rxjs';
+import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
+import { Keepalive } from '@ng-idle/keepalive';
 
 @Injectable({
   providedIn: 'root',
@@ -14,54 +16,7 @@ export class AuthService {
   user = new BehaviorSubject<User>(this.value);
   tokenExpirationTimer;
 
-  constructor(private http: HttpClient, private router: Router) {}
-
-  signup(email: string, password: string) {
-    console.log('hit');
-    return this.http
-      .post<AuthResponseData>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAEPysAfaX-Vy6IOgovDXKJiiNx2DGV7D0',
-        {
-          email,
-          password,
-          returnSecureToken: true,
-        }
-      )
-      .pipe(
-        catchError(this.handleError),
-        tap((data) => {
-          this.handleAuth(
-            data.email,
-            data.localId,
-            data.idToken,
-            +data.expiresIn
-          );
-        })
-      );
-  }
-
-  login(email, password) {
-    return this.http
-      .post<AuthResponseData>(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAEPysAfaX-Vy6IOgovDXKJiiNx2DGV7D0`,
-        {
-          email,
-          password,
-          returnSecureToken: true,
-        }
-      )
-      .pipe(
-        catchError(this.handleError),
-        tap((resData) => {
-          this.handleAuth(
-            resData.email,
-            resData.localId,
-            resData.idToken,
-            +resData.expiresIn
-          );
-        })
-      );
-  }
+  constructor(private router: Router) {}
 
   autoLogin() {
     const userData: {
@@ -115,7 +70,7 @@ export class AuthService {
     console.log(expirationDuration);
   }
 
-  private handleAuth(
+  handleAuth(
     email: string,
     userId: string,
     token: string,
@@ -129,7 +84,7 @@ export class AuthService {
     localStorage.setItem('userData', JSON.stringify(user));
   }
 
-  private handleError(errorRes: HttpErrorResponse) {
+  handleError(errorRes: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred!';
     if (!errorRes.error || !errorRes.error.error) {
       return throwError(errorMessage);
