@@ -1,4 +1,4 @@
-import { ModalComponent } from './../modal/modal/modal.component';
+import { ModalComponent } from '../modal/modal.component';
 import { MatDialogModule, MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { AuthService } from './../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -21,13 +21,6 @@ export class HeaderComponent implements OnInit {
 
   onLogout() {
     this.authService.logout();
-  }
-  openDialog() {
-    const dialogRef = this.dialog.open(ModalComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
   }
 
 }

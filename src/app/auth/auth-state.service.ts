@@ -1,10 +1,10 @@
 import { MatDialog } from '@angular/material/dialog';
-import { ModalComponent } from './../modal/modal/modal.component';
 import { Injectable, ViewChild } from '@angular/core';
 import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
 import { Keepalive } from '@ng-idle/keepalive';
 import { Subject, Observable } from 'rxjs';
-import { User } from './user.model';
+import { AuthService } from './auth.service';
+import { ModalComponent } from '../modal/modal.component';
 
 @Injectable({
   providedIn: 'root',
@@ -14,11 +14,13 @@ export class AuthStateService {
   idleState = 'Not started';
   timedOut = false;
   lastPing: Date = null;
-  @ViewChild('modal', { static: false }) modal: ModalComponent;
 
-  constructor(private idle: Idle, private keepAlive: Keepalive, private dialog: MatDialog) {
-    this.setIdle();
-  }
+  constructor(
+    private authService: AuthService,
+    private idle: Idle,
+    private keepAlive: Keepalive,
+    private dialog: MatDialog
+  ) {}
 
   isLoggedIn() {
     this.userLoggedIn.next(false);
@@ -43,6 +45,7 @@ export class AuthStateService {
     this.idle.onIdleEnd.subscribe(() => {
       this.idleState = 'Not idle anymore';
       console.log(this.idleState);
+      this.reset();
     });
 
     this.idle.onTimeout.subscribe(() => {
@@ -50,6 +53,7 @@ export class AuthStateService {
       this.closeModal();
       this.timedOut = true;
       console.log(this.idleState);
+      this.authService.logout();
     });
 
     this.idle.onIdleStart.subscribe(() => {
@@ -101,17 +105,13 @@ export class AuthStateService {
     console.log('opn');
     const dialogRef = this.dialog.open(ModalComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });
   }
 
-  openDialog() {
+  closeModal() {
     this.dialog.closeAll();
     console.log('close');
-  }
-
-  closeModal() {
-
   }
 }

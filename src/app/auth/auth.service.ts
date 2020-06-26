@@ -34,11 +34,11 @@ export class AuthService {
 
     if (loadedUser.token) {
       this.user.next(loadedUser);
-      const expirationDuration =
-        new Date(userData._tokenExpirationDate).getTime() -
-        new Date().getTime();
+      // const expirationDuration =
+      //   new Date(userData._tokenExpirationDate).getTime() -
+      //   new Date().getTime();
       // this.autoLogout(expirationDuration);
-      console.log(expirationDuration);
+      // console.log(expirationDuration);
     }
   }
 
@@ -47,10 +47,10 @@ export class AuthService {
     this.router.navigate(['/login']);
     localStorage.removeItem('userData');
 
-    if (this.tokenExpirationTimer) {
-      clearTimeout(this.tokenExpirationTimer);
-    }
-    this.tokenExpirationTimer = null;
+    // if (this.tokenExpirationTimer) {
+    //   clearTimeout(this.tokenExpirationTimer);
+    // }
+    // this.tokenExpirationTimer = null;
   }
 
   /* TODO: BUG auto log outs has a but, everytime i refresh, app.component.ts runs ngoninit

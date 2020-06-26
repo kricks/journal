@@ -33,6 +33,7 @@ export class AuthComponent implements OnInit {
 
     this.isLoading = true;
     this.authStatus.setUserLoggedIn(true);
+    this.authStatus.setIdle();
 
     if (this.isLoginMode) {
      authObs = this.auth.login(email, password);

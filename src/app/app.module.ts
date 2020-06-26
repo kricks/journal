@@ -1,4 +1,3 @@
-import { AuthStateService } from './auth/auth-state.service';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -44,7 +43,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { JournalComponent } from './journal/journal-entries/journal.component';
 import { HeaderComponent } from './header/header.component';
-import { ModalComponent } from './modal/modal/modal.component';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +52,7 @@ import { ModalComponent } from './modal/modal/modal.component';
     FormComponent,
     JournalComponent,
     HeaderComponent,
-    ModalComponent,
+    ModalComponent
   ],
   imports: [
     HttpClientModule,

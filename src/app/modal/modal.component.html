@@ -3,6 +3,6 @@
 <p>Your session with expires soon. You will be logged out in 'time'.</p>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Stay</button>
+  <button mat-button color="primary" mat-dialog-close (click)="logOut()">Log Out</button>
+  <button mat-button color="accent" [mat-dialog-close]="true" cdkFocusInitial>Stay Logged In</button>
 </mat-dialog-actions>
