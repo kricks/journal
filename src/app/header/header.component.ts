@@ -1,3 +1,5 @@
+import { ModalComponent } from './../modal/modal/modal.component';
+import { MatDialogModule, MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { AuthService } from './../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,7 +11,7 @@ import { Component, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
   isAuthenticated = false;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.authService.user.subscribe(user => {
@@ -19,6 +21,13 @@ export class HeaderComponent implements OnInit {
 
   onLogout() {
     this.authService.logout();
+  }
+  openDialog() {
+    const dialogRef = this.dialog.open(ModalComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
 }

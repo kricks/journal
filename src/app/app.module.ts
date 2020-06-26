@@ -1,9 +1,11 @@
+import { AuthStateService } from './auth/auth-state.service';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgIdleModule } from '@ng-idle/core';
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -42,6 +44,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { JournalComponent } from './journal/journal-entries/journal.component';
 import { HeaderComponent } from './header/header.component';
+import { ModalComponent } from './modal/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +53,7 @@ import { HeaderComponent } from './header/header.component';
     FormComponent,
     JournalComponent,
     HeaderComponent,
+    ModalComponent,
   ],
   imports: [
     HttpClientModule,
@@ -90,7 +94,9 @@ import { HeaderComponent } from './header/header.component';
     MatSortModule,
     MatPaginatorModule,
     ReactiveFormsModule,
-    NgIdleModule
+    NgIdleModule,
+    NgIdleKeepaliveModule.forRoot()
+
   ],
   providers: [
     {

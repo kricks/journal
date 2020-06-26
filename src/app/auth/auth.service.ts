@@ -1,12 +1,8 @@
 import { Router } from '@angular/router';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthResponseData } from './auth-response-data';
-import { catchError, tap } from 'rxjs/operators';
 import { User } from './user.model';
-import { throwError, BehaviorSubject, Subject } from 'rxjs';
-import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
-import { Keepalive } from '@ng-idle/keepalive';
+import { throwError, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -41,7 +37,7 @@ export class AuthService {
       const expirationDuration =
         new Date(userData._tokenExpirationDate).getTime() -
         new Date().getTime();
-      this.autoLogout(expirationDuration);
+      // this.autoLogout(expirationDuration);
       console.log(expirationDuration);
     }
   }
@@ -63,12 +59,12 @@ export class AuthService {
   everytime it refreshes, it will log out immediately and route to login page,
   i need to figure out to keep autologout but that doesnt run after refresh
   */
-  autoLogout(expirationDuration: number) {
-    this.tokenExpirationTimer = setTimeout(() => {
-      // this.logout();
-    }, expirationDuration);
-    console.log(expirationDuration);
-  }
+  // autoLogout(expirationDuration: number) {
+  //   this.tokenExpirationTimer = setTimeout(() => {
+  //     // this.logout();
+  //   }, expirationDuration);
+  //   console.log(expirationDuration);
+  // }
 
   handleAuth(
     email: string,
@@ -79,7 +75,7 @@ export class AuthService {
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
     const user = new User(email, userId, token, expirationDate);
     this.user.next(user);
-    this.autoLogout(expiresIn * 1000);
+    // this.autoLogout(expiresIn * 1000);
     console.log(expirationDate);
     localStorage.setItem('userData', JSON.stringify(user));
   }

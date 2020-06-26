@@ -1,3 +1,4 @@
+import { AuthStateService } from './auth-state.service';
 import { AuthHttpService } from './auth-http.service';
 import { AuthService } from './auth.service';
 import { AuthResponseData } from './auth-response-data';
@@ -16,7 +17,7 @@ export class AuthComponent implements OnInit {
   isLoading = false;
   error;
 
-  constructor(private router: Router, private auth: AuthHttpService) {}
+  constructor(private router: Router, private auth: AuthHttpService, private authStatus: AuthStateService) {}
 
   ngOnInit(): void {}
 
@@ -31,6 +32,7 @@ export class AuthComponent implements OnInit {
     let authObs: Observable<AuthResponseData>;
 
     this.isLoading = true;
+    this.authStatus.setUserLoggedIn(true);
 
     if (this.isLoginMode) {
      authObs = this.auth.login(email, password);
