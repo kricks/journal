@@ -1,16 +1,18 @@
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from './user.model';
+import { User } from '../auth/user.model';
 import { throwError, BehaviorSubject } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalComponent } from '../modal/modal.component';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   value;
-  user = new BehaviorSubject<User>(this.value);
   tokenExpirationTimer;
+  user = new BehaviorSubject<User>(this.value);
 
   constructor(private router: Router) {}
 
@@ -66,12 +68,7 @@ export class AuthService {
   //   console.log(expirationDuration);
   // }
 
-  handleAuth(
-    email: string,
-    userId: string,
-    token: string,
-    expiresIn: number
-  ) {
+  handleAuth(email: string, userId: string, token: string, expiresIn: number) {
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
     const user = new User(email, userId, token, expirationDate);
     this.user.next(user);

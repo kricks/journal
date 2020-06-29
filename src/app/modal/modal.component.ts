@@ -1,5 +1,6 @@
+
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-modal',
@@ -13,8 +14,11 @@ export class ModalComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  extendSession() {
+  }
+
   logOut() {
-    this.authService.logout();
+   
   }
 
 }

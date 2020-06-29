@@ -1,6 +1,6 @@
 import { ModalComponent } from '../modal/modal.component';
 import { MatDialogModule, MatDialogConfig, MatDialog } from '@angular/material/dialog';
-import { AuthService } from './../auth/auth.service';
+import { AuthService } from '../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

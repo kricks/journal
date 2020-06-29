@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthResponseData } from './auth-response-data';
+import { AuthResponseData } from '../auth/auth-response-data';
 import { catchError, tap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 

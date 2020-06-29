@@ -1,8 +1,8 @@
-import { AuthStateService } from './auth-state.service';
-import { AuthHttpService } from './auth-http.service';
-import { AuthService } from './auth.service';
+import { AuthStateService } from '../services/auth-state.service';
+import { AuthHttpService } from '../services/auth-http.service';
+import { AuthService } from '../services/auth.service';
 import { AuthResponseData } from './auth-response-data';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -17,7 +17,11 @@ export class AuthComponent implements OnInit {
   isLoading = false;
   error;
 
-  constructor(private router: Router, private auth: AuthHttpService, private authStatus: AuthStateService) {}
+  constructor(
+    private router: Router,
+    private auth: AuthHttpService,
+    private authStatus: AuthStateService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -32,11 +36,11 @@ export class AuthComponent implements OnInit {
     let authObs: Observable<AuthResponseData>;
 
     this.isLoading = true;
-    this.authStatus.setUserLoggedIn(true);
-    this.authStatus.setIdle();
+    this.authStatus.isLoggedIn(true);
+    // this.authStatus.setIdle();
 
     if (this.isLoginMode) {
-     authObs = this.auth.login(email, password);
+      authObs = this.auth.login(email, password);
     } else {
       authObs = this.auth.signup(email, password);
     }

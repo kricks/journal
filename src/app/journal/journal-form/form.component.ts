@@ -2,7 +2,7 @@ import { Journal } from './../journal.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { HttpJournalService } from '../http-journal.service';
-import { AuthService } from 'src/app/auth/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-form',
